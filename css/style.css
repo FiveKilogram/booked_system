@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f0f2f5;
+}
+
+.container {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+.announcement {
+    background-color: #e3f2fd;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    color: #1976d2;
+    text-align: center;
+    font-weight: 500;
+}
+
+.room {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.room-title {
+    font-size: 18px;
+    color: #34495e;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.slots-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.time-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.booking-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 6px;
+    width: 160px;
+    height: 45px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.booking-button:hover:not(.booked):not(.disabled) {
+    background-color: #45a049;
+    transform: translateY(-1px);
+}
+
+.booking-button.booked {
+    background-color: #e74c3c;
+    cursor: not-allowed;
+}
+
+.booking-button.disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+.task-name {
+    font-size: 12px;
+    color: #7f8c8d;
+    max-width: 160px;
+    text-align: center;
+    word-break: break-word;
+}
