@@ -1,22 +1,21 @@
 // Firebase 配置
 const firebaseConfig = {
-  apiKey: "AIzaSyAvBleFpF0ACQP5ZdITblyTAXZwY_NsMEg",
-  authDomain: "book-3a213.firebaseapp.com",
-  databaseURL: "https://book-3a213-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "book-3a213",
-  storageBucket: "book-3a213.firebasestorage.app",
-  messagingSenderId: "567622663755",
-  appId: "1:567622663755:web:ada5084a44ea8a140d97ce",
-  measurementId: "G-FJCH2G02M3"
+    apiKey: "AIzaSyAsDdYvYPFendZkc-w6_HqzF0skk-kj_bk",
+    authDomain: "renwu-f96c0.firebaseapp.com",
+    projectId: "renwu-f96c0",
+    storageBucket: "renwu-f96c0.firebasestorage.app",
+    messagingSenderId: "760006597971",
+    appId: "1:760006597971:web:a3f4f68c04e3911fc655a6",
+    measurementId: "G-SMV4XQZ2B9"
 };
 
 // 初始化 Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
-// 工作人员数据
+// 工作人员数据，固定为李楠
 const staffMembers = [
-    { id: 1, name: 'test' },
+    { id: 1, name: '李楠' }
 ];
 
 // 时间段数据
@@ -35,8 +34,20 @@ function getCurrentDate() {
     return now.toISOString().split('T')[0];
 }
 
+// 获取近两周的日期数组
+function getRecentTwoWeeksDates() {
+    const dates = [];
+    const now = new Date();
+    for (let i = 0; i < 14; i++) {
+        const date = new Date(now);
+        date.setDate(now.getDate() + i);
+        dates.push(date.toISOString().split('T')[0]);
+    }
+    return dates;
+}
+
 // 初始化任务表格
-async function initScheduleTable(selectedDate) {
+async function initScheduleTable(selectedDates) {
     const table = document.getElementById('scheduleTable');
     table.innerHTML = '';
 
@@ -44,50 +55,57 @@ async function initScheduleTable(selectedDate) {
         const snapshot = await database.ref('tasks').once('value');
         const tasks = snapshot.val() || {};
 
-        staffMembers.forEach(staff => {
-            const staffDiv = document.createElement('div');
-            staffDiv.className = 'room';
+        // 遍历近两周的日期
+        selectedDates.forEach(selectedDate => {
+            const dateDiv = document.createElement('div');
+            dateDiv.textContent = selectedDate;
+            table.appendChild(dateDiv);
 
-            const staffTitle = document.createElement('div');
-            staffTitle.className = 'room-title';
-            staffTitle.textContent = staff.name;
-            staffDiv.appendChild(staffTitle);
+            staffMembers.forEach(staff => {
+                const staffDiv = document.createElement('div');
+                staffDiv.className = 'room';
 
-            const slotsContainer = document.createElement('div');
-            slotsContainer.className = 'slots-container';
-            
-            timeSlots.forEach(slot => {
-                const slotDiv = document.createElement('div');
-                slotDiv.className = 'time-slot';
+                const staffTitle = document.createElement('div');
+                staffTitle.className = 'room-title';
+                staffTitle.textContent = staff.name;
+                staffDiv.appendChild(staffTitle);
 
-                const button = document.createElement('button');
-                const key = `${selectedDate}-${staff.id}-${slot.id}`;
-                const taskData = tasks[key];
-                const isBooked = !!taskData;
+                const slotsContainer = document.createElement('div');
+                slotsContainer.className = 'slots-container';
 
-                button.className = `booking-button ${isBooked ? 'booked' : ''}`;
-                button.textContent = slot.time;
-                button.onclick = () => toggleTask(selectedDate, staff.id, slot.id, button);
+                timeSlots.forEach(slot => {
+                    const slotDiv = document.createElement('div');
+                    slotDiv.className = 'time-slot';
 
-                if (staff.name.includes('不可预约')) {
-                    button.disabled = true;
-                    button.classList.add('disabled');
-                }
+                    const button = document.createElement('button');
+                    const key = `${selectedDate}-${staff.id}-${slot.id}`;
+                    const taskData = tasks[key];
+                    const isBooked = !!taskData;
 
-                slotDiv.appendChild(button);
+                    button.className = `booking-button ${isBooked ? 'booked' : ''}`;
+                    button.textContent = slot.time;
+                    button.onclick = () => toggleTask(selectedDate, staff.id, slot.id, button);
 
-                if (isBooked && taskData.taskName) {
-                    const taskNameDiv = document.createElement('div');
-                    taskNameDiv.className = 'task-name';
-                    taskNameDiv.textContent = taskData.taskName;
-                    slotDiv.appendChild(taskNameDiv);
-                }
+                    if (staff.name.includes('不可预约')) {
+                        button.disabled = true;
+                        button.classList.add('disabled');
+                    }
 
-                slotsContainer.appendChild(slotDiv);
+                    slotDiv.appendChild(button);
+
+                    if (isBooked && taskData.taskName) {
+                        const taskNameDiv = document.createElement('div');
+                        taskNameDiv.className = 'task-name';
+                        taskNameDiv.textContent = taskData.taskName;
+                        slotDiv.appendChild(taskNameDiv);
+                    }
+
+                    slotsContainer.appendChild(slotDiv);
+                });
+
+                staffDiv.appendChild(slotsContainer);
+                table.appendChild(staffDiv);
             });
-
-            staffDiv.appendChild(slotsContainer);
-            table.appendChild(staffDiv);
         });
 
     } catch (error) {
@@ -133,12 +151,12 @@ async function toggleTask(selectedDate, staffId, slotId, button) {
     }
 }
 
-// 初始化日期选择器
+// 初始化日期选择器（这里可以选择是否保留，因为默认展示近两周数据）
 function initDatePicker() {
     const datePicker = document.createElement('input');
     datePicker.type = 'date';
     datePicker.value = getCurrentDate();
-    datePicker.onchange = (e) => initScheduleTable(e.target.value);
+    datePicker.onchange = (e) => initScheduleTable([e.target.value]);
 
     const container = document.getElementById('datePickerContainer');
     container.innerHTML = '';
@@ -147,6 +165,7 @@ function initDatePicker() {
 
 // 页面初始化
 document.addEventListener('DOMContentLoaded', () => {
-    initDatePicker();
-    initScheduleTable(getCurrentDate());
+    // initDatePicker(); // 如果不需要日期选择器，可以注释掉这一行
+    const recentDates = getRecentTwoWeeksDates();
+    initScheduleTable(recentDates);
 });
