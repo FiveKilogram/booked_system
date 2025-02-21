@@ -1,12 +1,13 @@
 // Firebase 配置
 const firebaseConfig = {
-    apiKey: "AIzaSyAsDdYvYPFendZkc-w6_HqzF0skk-kj_bk",
-    authDomain: "renwu-f96c0.firebaseapp.com",
-    projectId: "renwu-f96c0",
-    storageBucket: "renwu-f96c0.firebasestorage.app",
-    messagingSenderId: "760006597971",
-    appId: "1:760006597971:web:a3f4f68c04e3911fc655a6",
-    measurementId: "G-SMV4XQZ2B9"
+  apiKey: "AIzaSyAvBleFpF0ACQP5ZdITblyTAXZwY_NsMEg",
+  authDomain: "book-3a213.firebaseapp.com",
+  databaseURL: "https://book-3a213-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "book-3a213",
+  storageBucket: "book-3a213.firebasestorage.app",
+  messagingSenderId: "567622663755",
+  appId: "1:567622663755:web:ada5084a44ea8a140d97ce",
+  measurementId: "G-FJCH2G02M3"
 };
 
 // 初始化 Firebase
@@ -15,18 +16,7 @@ const database = firebase.database();
 
 // 工作人员数据
 const staffMembers = [
-    { id: 1, name: '韩崇辉' },
-    { id: 2, name: '霍艳波' },
-    { id: 3, name: '实习生' },
-    { id: 4, name: '王宇轩' },
-    { id: 5, name: '实习生' },
-    { id: 6, name: '薛一苇' },
-    { id: 7, name: '实习生' },
-    { id: 8, name: '孟祥永' },
-    { id: 9, name: '实习生' },
-    { id: 10, name: '实习生2' },
-    { id: 11, name: '耿琦斌' },
-    { id: 12, name: '实习生' },
+    { id: 1, name: 'test' },
 ];
 
 // 时间段数据
