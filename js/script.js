@@ -1,12 +1,13 @@
 // Firebase 配置
 const firebaseConfig = {
-    apiKey: "AIzaSyAsDdYvYPFendZkc-w6_HqzF0skk-kj_bk",
-    authDomain: "renwu-f96c0.firebaseapp.com",
-    projectId: "renwu-f96c0",
-    storageBucket: "renwu-f96c0.firebasestorage.app",
-    messagingSenderId: "760006597971",
-    appId: "1:760006597971:web:a3f4f68c04e3911fc655a6",
-    measurementId: "G-SMV4XQZ2B9"
+  apiKey: "AIzaSyAvBleFpF0ACQP5ZdITblyTAXZwY_NsMEg",
+  authDomain: "book-3a213.firebaseapp.com",
+  databaseURL: "https://book-3a213-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "book-3a213",
+  storageBucket: "book-3a213.firebasestorage.app",
+  messagingSenderId: "567622663755",
+  appId: "1:567622663755:web:ada5084a44ea8a140d97ce",
+  measurementId: "G-FJCH2G02M3"
 };
 
 // 初始化 Firebase
